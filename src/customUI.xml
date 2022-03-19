@@ -1,0 +1,17 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+	<ribbon startFromScratch="false">
+		<tabs>
+			<tab id="MycustomTab" label="PowerGLE">
+				<group id="customGroup1" label="GLE">
+					<button id="customButton1" label="New GLE figure" imageMso="GroupChartAxes" size="large" onAction="RibbonNewGLEFigure" />
+					<button id="customButton2" label="Edit GLE figure" imageMso="Refresh" size="large" onAction="RibbonEditGLEFigure" />
+					<button id="customButton4" label="Regenerate selection" imageMso="FileStartWorkflow" size="large" onAction="RibbonRegenerateSelectedDisplays" />
+				</group>
+				<group id="customGroup2" label="Settings">
+					<button id="customButton3" label="Main Settings" imageMso="ControlsGallery" size="large" onAction="RibbonShowSettings" />
+					<button id="customButton5" label="About" imageMso="Help" size="large" onAction="RibbonShowAbout" />
+				</group>
+			</tab>
+		</tabs>
+	</ribbon>
+</customUI>
