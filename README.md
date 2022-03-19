@@ -24,7 +24,7 @@ Download the PowerGLE.ppam file.  This is a PowerPoint Add-in file that must be 
 
 Select the PowerGLE tab and choose "New GLE Figure", enter the GLE code and either click "Generate" or "Generate & Close" to see the GLE figure on the slide. If a new presentation is created it must be saved at least once prior to creating a new GLE figure. To edit the figure select the figure and then choose "Edit GLE Figure" from the ribbon bar.  Choose "Options" to see the various options.
 
-By default PowerGLE writes all the GLE code to a temporary subfolder of the folder that contains the current presentation.  Each figure is contained in a separate folder named "figure_#" to contain the output and secondary files in.  By default these folder are
+By default PowerGLE writes all the GLE code to a temporary subfolder within the folder that contains the current presentation.  The code for each GLE figure is contained within its own subfolder named "figure_#" along with any secondary and output files.  By default these folder are
 
     .\PowerGLE\<presentation file name>\figure_1
     .\PowerGLE\<presentation file name>\figure_2
