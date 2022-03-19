@@ -7,7 +7,7 @@ PowerGLE is a MS-Office PowerPoint Add-in for GLE.  GLE (Graphics Layout Engine)
 
 ![PowerGLE Screen Shot](https://glx.sourceforge.io/images/PowerGLEScreenShot.PNG "PowerGLE Screen Shot")
 
-PowerGLE generates and inserts bitmap images (PNG, JPEG, or TIFF) onto a slide that can be manipulated as a PowerPoint image. It is inspired by IguanaTeX and works in a similar manner.  The GLE code and data to draw the figures is saved within the PowerPoint presentation, making managing and editing of the GLE code for numerous figures simpler than externally storing the code and copy and pasting from the GLE previewer.
+PowerGLE generates and inserts bitmap images (PNG, JPEG, or TIFF) onto a slide that can be manipulated as a PowerPoint image. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex)  and works in a similar manner.  The GLE code and data to draw the figures is saved within the PowerPoint presentation, making managing and editing of the GLE code for numerous figures simpler than externally storing the code and copy and pasting from the GLE previewer.
 
 PowerGLE is written in Visual Basic For Applications (VBA) and is a collection of macros that is "compiled" into a .ppam file that is added into PowerPoint.
 
@@ -31,13 +31,13 @@ By default PowerGLE writes all the GLE code to a temporary subfolder of the fold
     .\PowerGLE\<presentation file name>\figure_3 
     ...
 
-The GLE file is named `figure_#.gle` within the folder.  This name can be changed by entering a new name in "Figure Name" field.  In this way all the GLE code can be quickly retrieved outside of the PowerPoint application.  PowerGLE leaves these files on the computer after the application closes.
+The GLE file is named `figure_#.gle` within the folder.  This name can be changed by entering a new name in "Figure Name" field.  In this way all the GLE code can be quickly retrieved outside of the PowerPoint application.  PowerGLE leaves these files on the computer after the application closes.  These files are not needed by PowerGLE and can be manually deleted if desired since all the GLE code is stored within the PowerPoint presentation.
 
- Data files can be imported for each figure under the "Data File(s)" tab.  The name of the file can be used in the GLE code data statement.
+Data files can be imported for each figure under the "Data File(s)" tab.  The name of the file can be used in the GLE code `data` statement.
 
 ## Building
 
-All the VBA code is contained in this repo along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
+All the VBA code is contained in this repository along with a vbscript `cppam.vbs` to generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
 
     cscript cppam.vbs PowerGLE
 
