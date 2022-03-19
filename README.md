@@ -2,8 +2,10 @@
 
 PowerGLE is a MS-Office PowerPoint Add-in for GLE.  GLE (Graphics Layout Engine) is a graphics scripting language designed for creating publication quality graphs, plots, diagrams, figures and slides (see https://glx.sourceforge.io or https://github.com/vlabella/GLE).
 
+[![Download PowerGLE](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1.0.0.ppam/download)
 
-![PowerGLE Screen Shot](https://glx.sourceforge.io/images/PowerGLEScreenShot.PNG) "PowerGLE Screen Shot")
+
+![PowerGLE Screen Shot](https://glx.sourceforge.io/images/PowerGLEScreenShot.PNG "PowerGLE Screen Shot")
 
 PowerGLE generates and inserts bitmap images (PNG, JPEG, or TIFF) onto a slide that can be manipulated as a PowerPoint image. It is inspired by IguanaTeX and works in a similar manner.  The GLE code and data to draw the figures is saved within the PowerPoint presentation, making managing and editing of the GLE code for numerous figures simpler than externally storing the code and copy and pasting from the GLE previewer.
 
@@ -35,10 +37,10 @@ The GLE file is named `figure_#.gle` within the folder.  This name can be change
 
 ## Building
 
-All the VBA code is contained in this repo along with a vbscript `cppam.vbs` that generates both the `.ppmt` and `.ppam` files.  To create both `PowerGLE.ppmt` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
+All the VBA code is contained in this repo along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
 
     cscript cppam.vbs PowerGLE
 
-Open the PowerGLE.ppmt file and hit Alt-F11 to open the VBA editing console to twiddle the code.  The `cppam.vbs` script relies on both the zip and unzip applications, which should be installed on the machine. (see http://infozip.sourceforge.net/)
+Open the PowerGLE.pptm file and hit Alt-F11 to open the VBA editing console to twiddle the code.  The `cppam.vbs` script relies on both the zip and unzip applications, which should be installed on the machine. (see http://infozip.sourceforge.net/)
 
-Any changes that are made to the code in the `PowerGLE.ppmt` file must be exported by running the macro `ExportVisualBasicCode` within PowerPoint.  This will place all the VBA code in a subfolder `.\PowerGLE_VBA`.  This will need to be copied over the original code for storing under version control or regenerating the PowerPoint files using `cppam.vbs`.
+Any changes that are made to the code in the `PowerGLE.pptm` file must be exported by running the macro `ExportVisualBasicCode` within PowerPoint.  This will place all the VBA code in a subfolder `.\PowerGLE_VBA`.  This will need to be copied over the original code for storing under version control or regenerating the PowerPoint files using `cppam.vbs`.
