@@ -1,6 +1,6 @@
 # PowerGLE
 
-PowerGLE is a MS-Office PowerPoint Add-in for GLE.  GLE (Graphics Layout Engine) is a graphics scripting language designed for creating publication quality graphs, plots, diagrams, figures and slides (see https://glx.sourceforge.io or https://github.com/vlabella/GLE).
+PowerGLE is an MS-Office PowerPoint Add-in for GLE.  GLE (Graphics Layout Engine) is a graphics scripting language designed for creating publication quality graphs, plots, diagrams, figures and slides (see https://glx.sourceforge.io or https://github.com/vlabella/GLE).
 
 [![Download PowerGLE](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1.0.0.ppam/download)
 
@@ -37,7 +37,7 @@ Data files can be imported for each figure under the "Data File(s)" tab.  The na
 
 ## Building
 
-All the VBA code is contained in this repository along with a vbscript `cppam.vbs` to generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
+All the VBA code is contained in this repository along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
 
     cscript cppam.vbs PowerGLE
 
