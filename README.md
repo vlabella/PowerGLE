@@ -1,24 +1,24 @@
 # PowerGLE
 
-PowerGLE is an MS-Office PowerPoint Add-in for GLE.  GLE (Graphics Layout Engine) is a graphics scripting language designed for creating publication quality graphs, plots, diagrams, figures and slides (see https://glx.sourceforge.io or https://github.com/vlabella/GLE).
+PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, diagrams. PowerGLE generates and inserts bitmap images (PNG, JPEG, or TIFF) from GLE source code onto a slide that can be manipulated as a PowerPoint image. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex)  and works in a similar manner.  The GLE code and data to draw the figures is saved within the PowerPoint presentation, making managing and editing GLE code for numerous figures simpler than externally storing it and copy & pasting from the GLE previewer.
 
-[![Download PowerGLE](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1.0.0.ppam/download)
+## Download & Installation
 
+PowerGLE is distributed as a .ppam (PowerPoint Add-in File) and is a collection of VBA macros and forms. Download the PowerGLE Add-in file from: 
+
+* GitHub [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE-1.0.0.ppam) 
+* SourceForge [PowerGLE.ppam](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1.0.0.ppam/download)
+
+Install it by opening PowerPoint and selecting Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  Macros must also be enabled in Options->Trust Center->Trust Center Settings by selecting "Enable all macros ..."
+
+## Screen Shot
 
 ![PowerGLE Screen Shot](https://glx.sourceforge.io/images/PowerGLEScreenShot.PNG "PowerGLE Screen Shot")
 
-PowerGLE generates and inserts bitmap images (PNG, JPEG, or TIFF) from GLE source code onto a slide that can be manipulated as a PowerPoint image. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex)  and works in a similar manner.  The GLE code and data to draw the figures is saved within the PowerPoint presentation, making managing and editing of the GLE code for numerous figures simpler than externally storing the code and copying and pasting from the GLE previewer.
-
-PowerGLE is written in Visual Basic For Applications (VBA) and is a collection of macros that is "compiled" into a .ppam file that is added into PowerPoint.
-
 ## Requirements
 
-* GLE and its supporting applications such as LaTeX and ghostscript.
+* [GLE](https://glx.sourceforge.io) and its supporting applications such as LaTeX and ghostscript.
 * MS office 2016 or later (may work on earlier versions but is untested)
-
-## Installation
-
-Download the [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE-1.0.0.ppam) file.  This is a PowerPoint Add-in file that must be manually added into the PowerPoint application.  Open PowerPoint and select Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  In addition, macros must be enabled by going to Options->Trust Center->Trust Center Settings and selecting "Enable all macros ...".
 
 ## Usage
 
@@ -37,7 +37,7 @@ Data files can be imported for each figure under the "Data File(s)" tab.  The na
 
 ## Building
 
-All the VBA code is contained in this repository along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
+The visual basic for applications (VBA) code is contained within this repository along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
 
     cscript cppam.vbs PowerGLE
 
