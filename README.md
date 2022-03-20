@@ -18,7 +18,7 @@ PowerGLE is written in Visual Basic For Applications (VBA) and is a collection o
 
 ## Installation
 
-Download the PowerGLE.ppam file.  This is a PowerPoint Add-in file that must be manually added into the PowerPoint application.  Open PowerPoint and select Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  In addition, macros must be enabled by going to Options->Trust Center->Trust Center Settings and selecting "Enable all macros ...".
+Download the [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE-1.0.0.ppam) file.  This is a PowerPoint Add-in file that must be manually added into the PowerPoint application.  Open PowerPoint and select Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  In addition, macros must be enabled by going to Options->Trust Center->Trust Center Settings and selecting "Enable all macros ...".
 
 ## Usage
 
