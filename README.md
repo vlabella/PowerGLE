@@ -6,7 +6,7 @@ PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](htt
 
 PowerGLE is distributed as a .ppam (PowerPoint Add-in) and is a collection of VBA macros and forms. Download the PowerGLE Add-in file from: 
 
-* GitHub [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE_v1_0_0.ppam) 
+* GitHub [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0b/PowerGLE_v1_0_0.ppam) 
 * SourceForge [PowerGLE.ppam](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE_v1_0_0.ppam/download)
 
 Install it by opening PowerPoint and selecting Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  Macros must also be enabled in Options->Trust Center->Trust Center Settings by selecting "Enable all macros ..."
@@ -39,7 +39,7 @@ The options that control the creation of the GLE figure are:
 * Output format: PNG, JPEG, and TIFF are supported (only bitmaps).
 * Transparent: will make the background transparent.  For PNG format only.
 * Figure name: controls the filename and temporary folder name for this image (see below).
-* Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint figure is calculated as screen_dpi/output_dpi x scaling_gain.  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
+* Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint figure is calculated as \(screen_dpi/output_dpi x scaling_gain\).  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
 
 
 ### Temporary files
@@ -64,4 +64,4 @@ The visual basic for applications (VBA) code is contained within this repository
 
 Open the PowerGLE.pptm file and hit Alt-F11 to open the VBA editing console to twiddle the code.  The `cppam.vbs` script relies on both the zip and unzip applications, which should be installed on the machine. (see http://infozip.sourceforge.net/).  The version number is optional and will be added to the filename. '.' in the version number will be changed to '\_' since PowerPoint cannot load .ppam files with more than one '.' in the filename.
 
-Any changes that are made to the code in the `PowerGLE.pptm` file must be exported by running the macro `ExportVisualBasicCode` within PowerPoint.  This will place all the VBA code in a subfolder `.\PowerGLE_VBA`.  This will need to be copied over the original code for storing under version control or regenerating the PowerPoint files using `cppam.vbs`.
+Any changes that are made to the code in the `PowerGLE.pptm` file must be exported by running the macro `ExportVisualBasicCode` within PowerPoint.  This will place all the VBA code in a sub-folder `.\PowerGLE_VBA`.  This will need to be copied over the original code for storing under version control or regenerating the PowerPoint files using `cppam.vbs`.
