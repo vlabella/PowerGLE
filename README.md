@@ -22,7 +22,7 @@ Install it by opening PowerPoint and selecting Options->Add-ins->Manage PowerPoi
 
 ## Usage & Features
 
-### Figure creation & Editing
+### Figure creation & editing
 
 Select the PowerGLE tab and choose "New GLE Figure", enter the GLE code and either click "Generate" or "Generate & Close" to see the GLE figure on the slide. If a new presentation is created it must be saved at least once prior to creating a new GLE figure. To edit the figure select the figure and then choose "Edit GLE Figure" from the ribbon bar.  Choose "Options" to see the various options.
 
@@ -34,16 +34,16 @@ Data files can be imported for each figure under the "Data File(s)" tab.  The na
 
 The options that control the creation of the GLE figure are:
 
-* DPI: controls the resolution or dots per inch of the bitmap image
-* Cairo: GLE will use the [cairo](https://www.cairographics.org/) engine when rendering the figure
-* Output format: PNG, JPEG, and TIFF are supported (only bitmaps)
-* Transparent: will make the background transparent.  For PNG format only
-* Figure name: controls the filename and temporary folder name for this image see below.
+* DPI: controls the resolution or dots per inch of the bitmap image.
+* Cairo: GLE will use the [cairo](https://www.cairographics.org/) engine when rendering the figure.
+* Output format: PNG, JPEG, and TIFF are supported (only bitmaps).
+* Transparent: will make the background transparent.  For PNG format only.
+* Figure name: controls the filename and temporary folder name for this image (see below).
 
 
 ### Temporary files
 
-By default PowerGLE writes all the GLE code to a temporary subfolder within the folder that contains the current presentation.  The code for each GLE figure is contained within its own subfolder named "figure_#" along with any secondary and output files.  By default these folder are
+PowerGLE writes all the GLE code to a temporary subfolder within the folder that contains the current presentation.  The code for each GLE figure is contained within its own subfolder named "figure_#" along with any secondary and output files.  By default these folder are
 
     .\PowerGLE\<presentation file name>\figure_1
     .\PowerGLE\<presentation file name>\figure_2
@@ -52,7 +52,7 @@ By default PowerGLE writes all the GLE code to a temporary subfolder within the 
 
 The GLE file is named `figure_#.gle` within the folder.  This name can be changed by entering a new name in "Figure Name" field.  In this way all the GLE code can be quickly retrieved outside of the PowerPoint application.  PowerGLE leaves these files on the computer after the application closes.  These files are not needed by PowerGLE and can be manually deleted if desired since all the GLE code is stored within the PowerPoint presentation.
 
-There is an option to use an absolute temporary folder as well.
+There is an option to use an absolute temporary root folder as well.
 
 
 ## Building
