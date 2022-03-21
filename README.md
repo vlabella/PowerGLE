@@ -1,6 +1,6 @@
 # PowerGLE
 
-PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts images created by GLE onto a slide that can be manipulated as a PowerPoint object. The GLE code and data utilized to draw each figure is stored within the PowerPoint presentation, simplifying the management and editing of large presentations with multiple GLE figures. PowerGLE is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex).
+PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts figures created by GLE onto a slide that can be manipulated as a PowerPoint image. The GLE code and data utilized to draw each figure is stored within the PowerPoint presentation, simplifying the management and editing of large presentations with multiple GLE figures. PowerGLE is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex).
 
 ## Download & Installation
 
@@ -36,10 +36,10 @@ The options that control the creation of the GLE figure are:
 
 * DPI: controls the resolution or dots per inch of the bitmap image.
 * Cairo: GLE will use the [cairo](https://www.cairographics.org/) engine when rendering the figure.
-* Output format: PNG, JPEG, and TIFF are supported (only bitmaps).
-* Transparent: will make the background transparent.  For PNG format only.
+* Output format: PNG, JPEG, and TIFF are supported (bitmap types only).
+* Transparent: make the background transparent, only for PNG format.
 * Figure name: controls the filename and temporary folder name for this image (see below).
-* Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint figure is calculated as \(screen_dpi/output_dpi x scaling_gain\).  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
+* Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint image is calculated as \(screen_dpi/output_dpi x scaling_gain\).  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
 
 
 ### Temporary files
