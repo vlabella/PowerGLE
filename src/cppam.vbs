@@ -1,8 +1,8 @@
 '
 ' cppam.vbs  Create PowerPoint.pptm and .ppam files for PowerGLE from a collection of vb scripts and forms
-''
+'
 ' author: Vincent LaBella vlabella@sunypoly.edu
-''
+'
 ' usage: cscript cppam.vbs filename [version]
 ' version is optional and `.` will be changed to `_` in the filename since powerpoint does not like `.` in add-in filenames
 '
@@ -76,9 +76,11 @@ Dim oShell
 Dim ofso
 Dim CurrentDirectory
 Dim Version
+Dim ver_filename
 Dim ver_string
-ver_string    = ""
-Version     = ""
+ver_filename    = ""
+Version         = ""
+ver_string      = ""
 
 Set oShell = CreateObject("WScript.Shell")
 
@@ -88,12 +90,13 @@ If WScript.Arguments.Count < 1 Then
 End If
 
 If WScript.Arguments.Count = 2 Then
-    Version = WScript.Arguments(1)
-    ver_string = "-" + Replace(Version,".","_") ' PowerPoint does not like multiple . in add-in filenames
+    Version         = WScript.Arguments(1)
+    ver_filename    = "_v" + Replace(Version,".","_") ' PowerPoint does not like multiple . in add-in filenames
+    ver_string      = "v" + Version ' for use in text boxes
 End If 
 
-ppamFile = WScript.Arguments(0)+ver_string+".ppam"
-pptmFile = WScript.Arguments(0)+ver_string+".pptm"
+ppamFile = WScript.Arguments(0)+ver_filename+".ppam"
+pptmFile = WScript.Arguments(0)+ver_filename+".pptm"
 
 WriteLine "Creating [" + pptmFile  + "] and [" + ppamFile + "]"
 
@@ -101,8 +104,6 @@ ppamFile = oShell.CurrentDirectory+"\"+ppamFile
 pptmFile = oShell.CurrentDirectory+"\"+pptmFile
 
 Set objFso = CreateObject("Scripting.FileSystemObject")
-
-
 ' build presentation'
 if 1 = 1 then
 Set objPPT = CreateObject( "PowerPoint.Application" )
@@ -112,7 +113,7 @@ Dim TextBox
 Set NewPres = objPPT.Presentations.Add
 Set Slide = NewPres.Slides.Add(1, 16)
 Set TextBox = Slide.Shapes.Item(1)
-TextBox.TextFrame.TextRange.Text = "PowerGLE v"+Version+" - PowerPoint Add-in (github.com/vlabella/PowerGLE) for GLE (glx.sourceforge.net)."
+TextBox.TextFrame.TextRange.Text = "PowerGLE "+ver_string+" - PowerPoint Add-in (github.com/vlabella/PowerGLE) for GLE (glx.sourceforge.net)."
 TextBox.TextFrame.TextRange.Font.Size = 32
 Set TextBox = Slide.Shapes.Item(2)
 TextBox.Delete
@@ -143,8 +144,13 @@ For Each file In files
         NewPres.VBProject.VBComponents.Import oShell.CurrentDirectory+"\"+file
     end if
 Next
-
-NewPres.VBProject.Name          = "PowerGLE_"+Replace(Version,".","_")
+' careful the project name is fussy and cannot be same as the filename
+Dim Name
+Name = "PowerGLEAddin"
+if ver_string <> "" then
+    Name = Name + "_" + Replace(ver_string,".","_")
+end if
+NewPres.VBProject.Name          = Name
 NewPres.VBProject.Description   = "PowerPoint Add-in (github.com/vlabella/PowerGLE) for GLE (glx.sourceforge.net)."
 ' add reference to the Microsoft Scripting Runtime version 1.0
 NewPres.VBProject.References.AddFromGuid "{420B2830-E718-11CF-893D-00A0C9054228}", 1, 0

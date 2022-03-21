@@ -39,6 +39,7 @@ The options that control the creation of the GLE figure are:
 * Output format: PNG, JPEG, and TIFF are supported (only bitmaps).
 * Transparent: will make the background transparent.  For PNG format only.
 * Figure name: controls the filename and temporary folder name for this image (see below).
+* Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint figure is calculated as screen_dpi/output_dpi x scaling_gain.  Increae or decrease the scaling_gain will make the intial size large or smaller, respectively.
 
 
 ### Temporary files
@@ -59,8 +60,8 @@ There is an option to use an absolute temporary root folder as well.
 
 The visual basic for applications (VBA) code is contained within this repository along with a vbscript `cppam.vbs` that generates both the `.pptm` and `.ppam` files.  To create both `PowerGLE.pptm` (macro enable presentation) and `PowerGLE.ppam` (PowerPoint add-in) type the following at the command prompt.
 
-    cscript cppam.vbs PowerGLE
+    cscript cppam.vbs PowerGLE [version]
 
-Open the PowerGLE.pptm file and hit Alt-F11 to open the VBA editing console to twiddle the code.  The `cppam.vbs` script relies on both the zip and unzip applications, which should be installed on the machine. (see http://infozip.sourceforge.net/)
+Open the PowerGLE.pptm file and hit Alt-F11 to open the VBA editing console to twiddle the code.  The `cppam.vbs` script relies on both the zip and unzip applications, which should be installed on the machine. (see http://infozip.sourceforge.net/).  The version number is optional and will be added to the filename
 
 Any changes that are made to the code in the `PowerGLE.pptm` file must be exported by running the macro `ExportVisualBasicCode` within PowerPoint.  This will place all the VBA code in a subfolder `.\PowerGLE_VBA`.  This will need to be copied over the original code for storing under version control or regenerating the PowerPoint files using `cppam.vbs`.
