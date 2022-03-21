@@ -1,6 +1,6 @@
 # PowerGLE
 
-PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts images generated from GLE code onto a slide that can be manipulated as a PowerPoint object. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex) and works in a similar manner.  The GLE code and data utilized to draw the figures is stored within the PowerPoint presentation, making managing and editing GLE code for numerous figures simpler than externally storing it and copy & pasting from the GLE previewer.
+PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts images created by GLE onto a slide that can be manipulated as a PowerPoint object. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex) and works in a similar manner.  The GLE code and data utilized to draw each figure is stored within the PowerPoint presentation, simplifying the management and editing of large presentations with multiple GLE figures.
 
 ## Download & Installation
 
@@ -20,9 +20,28 @@ Install it by opening PowerPoint and selecting Options->Add-ins->Manage PowerPoi
 * [GLE](https://glx.sourceforge.io) and its supporting applications such as [LaTeX](https://www.latex-project.org/) and [Ghostscript](https://www.ghostscript.com/).
 * MS office 2016 or later (may work on earlier versions but is untested)
 
-## Usage
+## Usage & Features
+
+### Figure creation & Editing
 
 Select the PowerGLE tab and choose "New GLE Figure", enter the GLE code and either click "Generate" or "Generate & Close" to see the GLE figure on the slide. If a new presentation is created it must be saved at least once prior to creating a new GLE figure. To edit the figure select the figure and then choose "Edit GLE Figure" from the ribbon bar.  Choose "Options" to see the various options.
+
+### Importing data files
+
+Data files can be imported for each figure under the "Data File(s)" tab.  The name of the file can be used in the GLE code `data` statement.
+
+### Options
+
+The options that control the creation of the GLE figure are:
+
+* DPI: controls the resolution or dots per inch of the bitmap image
+* Cairo: GLE will use the [cairo](https://www.cairographics.org/) engine when rendering the figure
+* Output format: PNG, JPEG, and TIFF are supported (only bitmaps)
+* Transparent: will make the background transparent.  For PNG format only
+* Figure name: controls the filename and temporary folder name for this image see below.
+
+
+### Temporary files
 
 By default PowerGLE writes all the GLE code to a temporary subfolder within the folder that contains the current presentation.  The code for each GLE figure is contained within its own subfolder named "figure_#" along with any secondary and output files.  By default these folder are
 
@@ -33,7 +52,8 @@ By default PowerGLE writes all the GLE code to a temporary subfolder within the 
 
 The GLE file is named `figure_#.gle` within the folder.  This name can be changed by entering a new name in "Figure Name" field.  In this way all the GLE code can be quickly retrieved outside of the PowerPoint application.  PowerGLE leaves these files on the computer after the application closes.  These files are not needed by PowerGLE and can be manually deleted if desired since all the GLE code is stored within the PowerPoint presentation.
 
-Data files can be imported for each figure under the "Data File(s)" tab.  The name of the file can be used in the GLE code `data` statement.
+There is an option to use an absolute temporary folder as well.
+
 
 ## Building
 
