@@ -6,8 +6,8 @@ PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](htt
 
 PowerGLE is distributed as a .ppam (PowerPoint Add-in) and is a collection of VBA macros and forms. Download the PowerGLE Add-in file from: 
 
-* GitHub [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE-1.0.0.ppam) 
-* SourceForge [PowerGLE.ppam](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1.0.0.ppam/download)
+* GitHub [PowerGLE.ppam](https://github.com/vlabella/PowerGLE/releases/download/1.0.0/PowerGLE-1_0_0.ppam) 
+* SourceForge [PowerGLE.ppam](https://sourceforge.net/projects/glx/files/PowerGLE/1.0.0/PowerGLE-1_0_0.ppam/download)
 
 Install it by opening PowerPoint and selecting Options->Add-ins->Manage PowerPoint Add-ins->Go.  Then select "Add New..." and choose the PowerGLE.ppam file.  Macros must also be enabled in Options->Trust Center->Trust Center Settings by selecting "Enable all macros ..."
 

@@ -1,7 +1,10 @@
 '
-' cppam.vbs  Create PowerPoint.pptm and ppam files for PowerGLE from a collection of vb scripts and forms
+' cppam.vbs  Create PowerPoint.pptm and .ppam files for PowerGLE from a collection of vb scripts and forms
+''
 ' author: Vincent LaBella vlabella@sunypoly.edu
-' usage cscript cppam.vbs filename
+''
+' usage: cscript cppam.vbs filename [version]
+' version is optional and `.` will be changed to `_` in the filename since powerpoint does not like `.` in add-in filenames
 '
 Option Explicit
 
@@ -63,8 +66,6 @@ Const vbext_ct_MSForm= 3  ' Microsoft Form
 Const vbext_ct_ActiveXDesigner=    11'  ActiveX Designer
 Const vbext_ct_Document  = 100' Document Module
 
-Dim inputFile
-Dim outputFile
 Dim ppamFile
 Dim pptmFile
 Dim objPPT
@@ -74,16 +75,25 @@ Dim objFso
 Dim oShell
 Dim ofso
 Dim CurrentDirectory
+Dim Version
+Dim ver_string
+ver_string    = ""
+Version     = ""
 
 Set oShell = CreateObject("WScript.Shell")
 
-If WScript.Arguments.Count <> 1 Then
-    WriteLine "You need to specify input and output files."
+If WScript.Arguments.Count < 1 Then
+    WriteLine "The output filename must be specified as an option."
     WScript.Quit
 End If
 
-ppamFile = WScript.Arguments(0)+".ppam"
-pptmFile = WScript.Arguments(0)+".pptm"
+If WScript.Arguments.Count = 2 Then
+    Version = WScript.Arguments(1)
+    ver_string = "-" + Replace(Version,".","_") ' PowerPoint does not like multiple . in add-in filenames
+End If 
+
+ppamFile = WScript.Arguments(0)+ver_string+".ppam"
+pptmFile = WScript.Arguments(0)+ver_string+".pptm"
 
 WriteLine "Creating [" + pptmFile  + "] and [" + ppamFile + "]"
 
@@ -92,15 +102,8 @@ pptmFile = oShell.CurrentDirectory+"\"+pptmFile
 
 Set objFso = CreateObject("Scripting.FileSystemObject")
 
-'If objFso.FileExists( outputFile ) Then
-'    WriteLine "Your output file (' & outputFile & ') already exists!"
-'    WScript.Quit
-'End If
 
-'WriteLine "Input File:  " & inputFile
-'WriteLine "Output File: " & outputFile
-
-' build presenation'
+' build presentation'
 if 1 = 1 then
 Set objPPT = CreateObject( "PowerPoint.Application" )
 Dim NewPres
@@ -109,10 +112,10 @@ Dim TextBox
 Set NewPres = objPPT.Presentations.Add
 Set Slide = NewPres.Slides.Add(1, 16)
 Set TextBox = Slide.Shapes.Item(1)
-TextBox.TextFrame.TextRange.Text = "PowerGLE - PowerPoint Add-in for GLE (glx.sourceforge.net)"
+TextBox.TextFrame.TextRange.Text = "PowerGLE v"+Version+" - PowerPoint Add-in (github.com/vlabella/PowerGLE) for GLE (glx.sourceforge.net)."
+TextBox.TextFrame.TextRange.Font.Size = 32
 Set TextBox = Slide.Shapes.Item(2)
 TextBox.Delete
-
 Dim sh 
 Set sh = Slide.Shapes.AddPicture( oShell.CurrentDirectory+"\"+"logo.png", msoFalse, msoTrue, 0, 0)
 sh.Top = (NewPres.PageSetup.SlideHeight - sh.Height) / 2
@@ -133,7 +136,6 @@ files(10) = "LogFileViewer.frm"
 files(11) = "RegenerateForm.frm"
 files(12) = "AppEventHandler.cls"
 
-
 Dim file
 For Each file In files
     WriteLine file
@@ -142,18 +144,16 @@ For Each file In files
     end if
 Next
 
-
-NewPres.VBProject.Name = "PowerGLEAddin"
-NewPres.VBProject.Description = "PowerPoint Add-in for GLE. glx.sourceforge.net"
+NewPres.VBProject.Name          = "PowerGLE_"+Replace(Version,".","_")
+NewPres.VBProject.Description   = "PowerPoint Add-in (github.com/vlabella/PowerGLE) for GLE (glx.sourceforge.net)."
 ' add reference to the Microsoft Scripting Runtime version 1.0
 NewPres.VBProject.References.AddFromGuid "{420B2830-E718-11CF-893D-00A0C9054228}", 1, 0
-
 '
 ' add the custom ribbon
 '
 ' objPPT.IRibbonExtensibility.GetCustomUI  oShell.CurrentDirectory+"\"+customui.xml
-'NewPres.SaveAs ppamFile , ppSaveAsOpenXMLAddin
-
+' NewPres.SaveAs ppamFile , ppSaveAsOpenXMLAddin
+'
 NewPres.SaveAs pptmFile , ppSaveAsOpenXMLPresentationMacroEnabled
 NewPres.Close
 Set Slide = Nothing
@@ -241,5 +241,3 @@ NewPres.Close
 Set NewPres = Nothing
 objPPT.Quit
 Set objPPT = Nothing
-
-
