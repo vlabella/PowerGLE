@@ -1,6 +1,6 @@
 # PowerGLE
 
-PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts images created by GLE onto a slide that can be manipulated as a PowerPoint object. It is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex) and works in a similar manner.  The GLE code and data utilized to draw each figure is stored within the PowerPoint presentation, simplifying the management and editing of large presentations with multiple GLE figures.
+PowerGLE is an MS-Office PowerPoint Add-in for Graphics Layout Engine ([GLE](https://glx.sourceforge.io)), which is a graphics scripting language designed for creating publication quality graphs, plots, and diagrams. PowerGLE generates and inserts images created by GLE onto a slide that can be manipulated as a PowerPoint object. The GLE code and data utilized to draw each figure is stored within the PowerPoint presentation, simplifying the management and editing of large presentations with multiple GLE figures. PowerGLE is inspired by [IguanaTeX](https://www.jonathanleroux.org/software/iguanatex).
 
 ## Download & Installation
 
