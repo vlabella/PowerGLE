@@ -43,14 +43,6 @@ Dim TemplateSortedList() As String
 Dim TemplateNameSortedListString As String
 Dim FormHeightWidthSet As Boolean
 Dim DoneWithActivation As Boolean
-Dim theAppEventHandler As New AppEventHandler
-
-Sub InitializeApp()
-    Debug.Print "initapp"
-    Set theAppEventHandler.App = Application
-    Set GlobalOldShape = Nothing
-   
-End Sub
 
 Private Sub UserForm_Initialize()
     ' called when form is loaded

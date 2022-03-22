@@ -29,7 +29,7 @@ Public Const OUTPUT_FORMATS As String = "PNG,JPEG,TIFF"
 Public Const OUTPUT_FORMAT_FILE_EXT As String = "png,jpeg,tiff"
 Public Const GLE_FORM_MIN_HEIGHT As Integer = 350
 Public Const GLE_FORM_MIN_WIDTH As Integer = 250
-Public Const SCREEN_DPI As Double = 96
+Public Const ENDL As String = vbCrLf
 '
 ' -- User changeable settings defaults
 '
@@ -54,6 +54,7 @@ Public Const DEFAULT_GLE_FORM_WIDTH As Integer = 400
 Public Const DEFAULT_DEBUG As Boolean = False
 Public Const DEFAULT_SLIDE_POSTIION_X As Integer = 100
 Public Const DEFAULT_SLIDE_POSTIION_Y As Integer = 100
+Public Const DEFAULT_GLE_CODE As String = "size 10 10" + ENDL + "set font texcmss" + ENDL + "set hei 0.5" + ENDL + "amove 0 0" + ENDL
 '
 ' -- Registry names for user changeable settings
 '
@@ -117,13 +118,10 @@ Public Function GetDefaultValue(name As String) As Variant
     GetDefaultValue = ""
     If name = GLE_EXECUTABLE_VALUE_NAME Then
         GetDefaultValue = DEFAULT_GLE_EXECUTABLE
-    ElseIf name = INITIAL_SOURCECODE_VALUE_NAME Or name = SOURCECODE_CURSOR_POSITION_VALUE_NAME Then
-        ' must hard code this here because string constants cannot contain line enedings
-        Const DEFAULT_GLE_CODE As String = "size 10 10" + vbCr + "set font texcmss" + vbCr + "set hei 0.5" + vbCr + "amove 0 0" + vbCr
+    ElseIf name = INITIAL_SOURCECODE_VALUE_NAME Then
         GetDefaultValue = DEFAULT_GLE_CODE
-        If name = SOURCECODE_CURSOR_POSITION_VALUE_NAME Then
-            GetDefaultValue = Len(DEFAULT_GLE_CODE)
-        End If
+    ElseIf name = SOURCECODE_CURSOR_POSITION_VALUE_NAME Then
+        GetDefaultValue = Len(DEFAULT_GLE_CODE)
     ElseIf name = BITMAP_DPI_VALUE_NAME Then
         GetDefaultValue = DEFAULT_BITMAP_DPI
     ElseIf name = OUTPUT_FORMAT_VALUE_NAME Then

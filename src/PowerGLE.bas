@@ -15,6 +15,56 @@ Public GlobalOldShape As Shape
 Public GlobalDataFiles As New Scripting.Dictionary
 Public RegenerateContinue As Boolean
 
+Public theAppEventHandler As New AppEventHandler
+
+Sub InitializeApp()
+    Debug.Print "initapp"
+    Set theAppEventHandler.App = Application
+    Set GlobalOldShape = Nothing
+End Sub
+
+Private Sub Auto_Open()
+    ' Runs when the add-in is loaded
+    Debug.Print "Auto Open"
+    InitializeApp
+    'Load GLEForm
+    'Unload GLEForm
+End Sub
+
+Public Sub onLoadRibbon(myRibbon as IRibbonUI)
+    ' runs when ribbon is loaded
+    Debug.Print "Ribbon Loaded"
+    InitializeApp
+End Sub
+
+Private Sub Auto_Close()
+    GLEForm.UnInitializeApp
+End Sub
+
+Public Sub RibbonNewGLEFigure(ByVal control)
+    NewGLEFigure
+End Sub
+
+Public Sub RibbonEditGLEFigure(ByVal control)
+    EditGLEFigure
+End Sub
+
+Public Sub RibbonShowSettings(ByVal control)
+    LoadSettingsForm
+End Sub
+
+Public Sub RibbonShowAbout(ByVal control)
+    Load AboutBox
+    AboutBox.Show
+End Sub
+
+Public Sub RibbonRegenerateSelectedDisplays(ByVal control)
+    Load BatchEditForm
+    BatchEditForm.Show
+End Sub
+
+
+
 Public Sub SetOldShape(s As Shape)
     Set GlobalOldShape = s
     ' Debug.Print "Set old shape " + GlobalOldShape.Tags(POWER_GLE_FIGURE_TAG)
@@ -385,42 +435,11 @@ Function CountDisplaysInSlide(vSl As Slide) As Integer
     CountDisplaysInSlide = DisplayCount
 End Function
 
-Private Sub Auto_Open()
-    ' Runs when the add-in is loaded
-    GLEForm.InitializeApp
-    Load GLEForm
-    Unload GLEForm
-End Sub
-
-Private Sub Auto_Close()
-    GLEForm.UnInitializeApp
-End Sub
 
 Sub LoadSettingsForm()
     Load SettingsForm
     SettingsForm.Show
 End Sub
 
-Public Sub RibbonNewGLEFigure(ByVal control)
-    NewGLEFigure
-End Sub
-
-Public Sub RibbonEditGLEFigure(ByVal control)
-    EditGLEFigure
-End Sub
-
-Public Sub RibbonShowSettings(ByVal control)
-    LoadSettingsForm
-End Sub
-
-Public Sub RibbonShowAbout(ByVal control)
-    Load AboutBox
-    AboutBox.Show
-End Sub
-
-Public Sub RibbonRegenerateSelectedDisplays(ByVal control)
-    Load BatchEditForm
-    BatchEditForm.Show
-End Sub
 
 
