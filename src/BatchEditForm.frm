@@ -21,6 +21,10 @@ Attribute VB_Exposed = False
 
 
 
+
+
+
+
 Private Sub UserForm_Initialize()
     LoadSettings
     Me.Top = Application.Top + 110
@@ -31,8 +35,8 @@ Private Sub LoadSettings()
     TextBoxTempFolder.Text = GetTempPath(False)
     ComboBoxOutputFormat.List = ArrayFromCSVList(OUTPUT_FORMATS)
     ComboBoxOutputFormat.ListIndex = GetArrayIndex(OUTPUT_FORMATS, GetValue(OUTPUT_FORMAT_VALUE_NAME))
-    TextBoxDpi.Text = GetValue(BITMAP_DPI_VALUE_NAME)
-    CheckBoxPNGTransparent.value = GetValue(PNG_TRANSPARENT_VALUE_NAME)
+    TextBoxDPI.Text = GetValue(BITMAP_DPI_VALUE_NAME)
+    checkboxPNGTransparent.value = GetValue(PNG_TRANSPARENT_VALUE_NAME)
     CheckBoxUseCairo.value = GetValue(USE_CAIRO_VALUE_NAME)
 
     CheckBoxModifyTempFolder.value = False
@@ -97,8 +101,8 @@ Private Sub Apply_CheckBoxModifyOutputFormat()
 End Sub
 
 Private Sub Apply_CheckBoxModifyDPI()
-    LabelDpi.Enabled = CheckBoxModifyDPI.value
-    TextBoxDpi.Enabled = CheckBoxModifyDPI.value
+    LabelDPI.Enabled = CheckBoxModifyDPI.value
+    TextBoxDPI.Enabled = CheckBoxModifyDPI.value
 End Sub
 
 Private Sub Apply_CheckBoxModifyUseCairo()
@@ -106,7 +110,7 @@ Private Sub Apply_CheckBoxModifyUseCairo()
 End Sub
 
 Private Sub Apply_CheckBoxModifyPNGTransparent()
-    CheckBoxPNGTransparent.Enabled = CheckBoxModifyPNGTransparent.value
+    checkboxPNGTransparent.Enabled = CheckBoxModifyPNGTransparent.value
 End Sub
 
 Private Sub Apply_CheckBoxReplaceText()

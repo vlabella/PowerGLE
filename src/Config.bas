@@ -111,7 +111,7 @@ End Function
 ' SetValue saves to registry
 ' GetDefault is a look up table since hashmaps dont exists in VBA - or dictionaries cannot be const
 ' calling code must know value name of setting defined above as constants
-' value type in registry is deterined by VBA type
+' value type in registry is determined by VBA type
 '
 Public Function GetDefaultValue(name As String) As Variant
     ' look up table

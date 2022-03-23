@@ -31,7 +31,7 @@ Private Sub Auto_Open()
     'Unload GLEForm
 End Sub
 
-Public Sub onLoadRibbon(myRibbon as IRibbonUI)
+Public Sub onLoadRibbon(myRibbon As IRibbonUI)
     ' runs when ribbon is loaded
     Debug.Print "Ribbon Loaded"
     InitializeApp
@@ -62,8 +62,6 @@ Public Sub RibbonRegenerateSelectedDisplays(ByVal control)
     Load BatchEditForm
     BatchEditForm.Show
 End Sub
-
-
 
 Public Sub SetOldShape(s As Shape)
     Set GlobalOldShape = s
@@ -97,7 +95,7 @@ Function GetSelectedShape(ByRef lshape As Shape) As Boolean
     GetSelectedShape = False
     If Sel.Type = ppSelectionShapes Then
         ' First make sure we don't have any shapes with duplicate names on this slide
-        Call DeDuplicateShapeNamesInSlide(ActiveWindow.View.Slide.SlideIndex)
+        Call DeDuplicateShapeNamesInSlide(ActiveWindow.View.slide.SlideIndex)
         If Sel.ShapeRange.count = 1 Then ' if not 1, then multiple objects are selected
             ' Group case: either 1 object within a group, or 1 group corresponding to an EMF display
             If Sel.ShapeRange.Type = msoGroup Then
@@ -146,7 +144,7 @@ End Sub
 
 Function EditGLEFigure() As Boolean
     ' Check if the user currently has a single GLE figure selected.
-    ' If so, display the dialog box. If not, dislpay an error message.
+    ' If so, display the dialog box. If not, display an error message.
     ' Called when the user clicks the "Edit GLE Figure" menu item.
     EditGLEFigure = False
     GlobalDataFiles.RemoveAll
@@ -174,7 +172,7 @@ End Function
 ' Make sure there aren't multiple shapes with the same name prior to processing
 Sub DeDuplicateShapeNamesInSlide(SlideIndex As Integer)
     Dim vSh As Shape
-    Dim vSl As Slide
+    Dim vSl As slide
     Set vSl = ActivePresentation.Slides(SlideIndex)
     
     Dim NameList() As String
@@ -229,12 +227,12 @@ Public Sub RegenerateSelectedDisplays()
     Dim Sel As Selection
     Set Sel = Application.ActiveWindow.Selection
     Dim vSh As Shape
-    Dim vSl As Slide
+    Dim vSl As slide
     Dim SlideIndex As Integer
     RegenerateContinue = True
     Select Case Sel.Type
         Case ppSelectionShapes
-            SlideIndex = ActiveWindow.View.Slide.SlideIndex
+            SlideIndex = ActiveWindow.View.slide.SlideIndex
             Call DeDuplicateShapeNamesInSlide(SlideIndex)
             DisplayCount = CountDisplaysInSelection(Sel)
             If DisplayCount > 0 Then
@@ -288,7 +286,7 @@ Public Sub RegenerateSelectedDisplays()
     Unload RegenerateForm
 End Sub
 
-Sub RegenerateDisplaysOnSlide(vSl As Slide)
+Sub RegenerateDisplaysOnSlide(vSl As slide)
     vSl.Select
     Call DeDuplicateShapeNamesInSlide(vSl.SlideIndex)
     Dim vSh As Shape
@@ -379,13 +377,13 @@ Private Sub Apply_BatchEditSettings()
         GLEForm.ComboBoxOutputFormat.ListIndex = BatchEditForm.ComboBoxOutputFormat.ListIndex
     End If
     If BatchEditForm.CheckBoxModifyDPI.value Then
-        GLEForm.TextBoxLocalDPI.Text = BatchEditForm.TextBoxDpi.Text
+        GLEForm.TextBoxLocalDPI.Text = BatchEditForm.TextBoxDPI.Text
     End If
     If BatchEditForm.CheckBoxModifyUseCairo.value Then
         GLEForm.CheckBoxUseCairo.value = True
     End If
     If BatchEditForm.CheckBoxModifyPNGTransparent.value Then
-        GLEForm.CheckBoxPNGTransparent.value = True
+        GLEForm.checkboxPNGTransparent.value = True
     End If
     If BatchEditForm.CheckBoxReplaceText.value Then
         If BatchEditForm.TextBoxFindText.Text <> "" Then
@@ -426,7 +424,7 @@ Function CountDisplaysInSelection(Sel As Selection) As Integer
     CountDisplaysInSelection = DisplayCount
 End Function
 
-Function CountDisplaysInSlide(vSl As Slide) As Integer
+Function CountDisplaysInSlide(vSl As slide) As Integer
     Dim vSh As Shape
     DisplayCount = 0
     For Each vSh In vSl.Shapes

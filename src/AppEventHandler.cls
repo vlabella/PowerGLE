@@ -10,6 +10,56 @@ Attribute VB_Exposed = False
 Public WithEvents App As Application
 Attribute App.VB_VarHelpID = -1
 
+Private Sub App_WindowSelectionChange(ByVal Sel As Selection)
+    ' happens when a selection is changed or copy and pasted
+    ' Detect event where PowerGLE figure has been created using copy and paste
+    Debug.Print "App_WindowSelectionChange "
+    If Sel.Type = ppSelectionShapes Then
+        Debug.Print "App_WindowSelectionChange " + CStr(Sel.Type) + " " + CStr(Sel.HasChildShapeRange)
+        ' Get all the shapes in the selection that are PowerGLEShapes maybe multiple if in a group
+        Dim SelShapes() As Variant
+        SelShapes = GetAllShapesInShapeRange(Sel.ShapeRange)
+        ' get all the shapes in the current presenation that are PowerGLEShapes
+        If (Not SelShapes) = -1 Then
+            ' empty array no powergle shapes exit
+            Debug.Print "no sel shapes"
+            Exit Sub
+        End If
+        Dim PresShapes() As Variant
+        PresShapes = GetAllShapesInPresentation(ActivePresentation)
+        If (Not PresShapes) = -1 Then
+            ' empty array no powergle shapes in presentation
+            Exit Sub
+        End If
+        ' find shapes that have same uuid but different names - this indictes a COPY event
+        For Each SelShape In SelShapes
+            Debug.Print "SELECTION: PowerGLE Shape " + SelShape.name + " " + SelShape.Tags(GetShapeTagName(TAG_FIGURE_NAME)) + " " + SelShape.Tags(GetShapeTagName(TAG_FIGURE_UUID))
+            For Each PresShape In PresShapes
+                Debug.Print "PRESENTATION: PowerGLE Shape " + SelShape.name + " " + SelShape.Tags(GetShapeTagName(TAG_FIGURE_NAME)) + " " + SelShape.Tags(GetShapeTagName(TAG_FIGURE_UUID))
+                If PresShape.Tags(GetShapeTagName(TAG_FIGURE_UUID)) = SelShape.Tags(GetShapeTagName(TAG_FIGURE_UUID)) And PresShape.name <> SelShape.name Then
+                    Debug.Print "COPY EVENT"
+                    With SelShape.Tags
+                    .Delete (GetShapeTagName(TAG_FIGURE_UUID))
+                    .Add GetShapeTagName(TAG_FIGURE_UUID), GetUUID()
+                    .Delete (GetShapeTagName(TAG_TEMP_FOLDER))
+                    .Add GetShapeTagName(TAG_TEMP_FOLDER), GetTempPath(False)
+                    ' gets the next auto-gen figure name availible.
+                    ' copied figure name will revert back to auto-gen on overriding any figure name customization of source figure by the user
+                    .Delete (GetShapeTagName(TAG_FIGURE_NAME))
+                    Dim next_index As Long
+                    ' must get max of next index from both folder and existsing shapes in presentation
+                    next_index = max(GetNextFigureIndexInFolder(GetTempPath()), GetNextFigureIndexInShapes(PresShapes))
+                    .Add GetShapeTagName(TAG_FIGURE_NAME), GetFigureName(next_index)
+                    ' create the figure directory so another copy will get unique name
+                    CreateFolder (AddSlash(GetTempPath()) + .Item(GetShapeTagName(TAG_FIGURE_NAME)))
+                    End With
+                    ' update alt text
+                    FormAltTextandTitle SelShape
+                End If
+            Next
+        Next
+    End If
+End Sub
 
 Private Sub App_AfterDragDropOnSlide(ByVal Sld As slide, ByVal X As Single, ByVal Y As Single)
 Debug.Print "App_AfterDragDropOnSlide"
@@ -142,29 +192,3 @@ Private Sub App_WindowDeactivate(ByVal Pres As Presentation, ByVal Wn As Documen
 Debug.Print "App_WindowDeactivate"
 End Sub
 
-Private Sub App_WindowSelectionChange(ByVal Sel As Selection)
-    ' happens when a selection is changed or copy and pasted
-    ' try to implement something to detect a duplicte PowerGLE figure has been created using copy and paste
-    Dim lshape As Shape
-    Debug.Print "App_WindowSelectionChange " + CStr(Sel.Type) + " " + CStr(Sel.HasChildShapeRange)
-    If Sel.Type = ppSelectionShapes Then
-        ' try first shape  should go through each shape
-        For Each lshape In Sel.ShapeRange
-            If IsPowerGLEShape(lshape) Then
-                Debug.Print "PowerGLE Shape " + lshape.name+" "+ lshape.Tags(GetShapeTagName(TAG_FIGURE_NAME)) + " " + lshape.Tags(GetShapeTagName(TAG_FIGURE_UUID))
-                'does this shape uuid exist in this presentation - if so create a new uuid and change the figure name
-                ' it has just been copy and pasted
-                For Each mySlide in ActivePresentation.Slides
-                    For each myShape in MySlide.Shapes 
-                        ' loop on all groups too'
-                        ' if a shape is found with the same uuid as the selected shape and a different name
-                        ' then the selected shape has just been copied
-                        ' change the uuid and figure name of the selected shape.
-                        ' do this for all selected shapes
-                        Debug.Print myShape.name 
-                    Next 
-                Next 
-            End If
-        Next
-    End If
-End Sub

@@ -14,30 +14,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Dim TemplateSortedListString As String
 Dim TemplateSortedList() As String
 Dim TemplateNameSortedListString As String
@@ -57,7 +33,7 @@ Private Sub UserForm_Initialize()
     If GlobalOldShape Is Nothing Then
         ButtonGenerate.Caption = "Generate"
         ButtonGenerateAndClose.Caption = "Generate & Close"
-        TextBoxFigureName = GetFigureFolder(OutputPath)
+        TextBoxFigureName = GetNextFigureName(OutputPath)
     Else
         RetrieveOldShapeInfo GlobalOldShape
         ButtonGenerate.Caption = "Regenerate"
@@ -104,7 +80,7 @@ Private Sub SaveSettings()
     SetValue SOURCECODE_CURSOR_POSITION_VALUE_NAME, CLng(TextBoxGLECode.SelStart)
     SetValue USE_CAIRO_VALUE_NAME, BoolToInt(CheckBoxUseCairo.value)
     SetValue BITMAP_DPI_VALUE_NAME, CStr(TextBoxLocalDPI.Text)
-    SetValue PNG_TRANSPARENT_VALUE_NAME, BoolToInt(CheckBoxPNGTransparent.value)
+    SetValue PNG_TRANSPARENT_VALUE_NAME, BoolToInt(checkboxPNGTransparent.value)
     SetValue DEBUG_VALUE_NAME, BoolToInt(checkboxDebug.value)
     SetValue EDITOR_FONT_SIZE_VALUE_NAME, CStr(TextBoxGLECode.Font.size)
     SetValue EDITOR_WORD_WRAP_VALUE_NAME, BoolToInt(TextBoxGLECode.WordWrap)
@@ -118,7 +94,7 @@ Private Sub LoadSettings()
     TextBoxGLECode.SelStart = GetValue(SOURCECODE_CURSOR_POSITION_VALUE_NAME)
     CheckBoxUseCairo.value = GetValue(USE_CAIRO_VALUE_NAME)
     TextBoxLocalDPI.Text = GetValue(BITMAP_DPI_VALUE_NAME)
-    CheckBoxPNGTransparent.value = GetValue(PNG_TRANSPARENT_VALUE_NAME)
+    checkboxPNGTransparent.value = GetValue(PNG_TRANSPARENT_VALUE_NAME)
     checkboxDebug.value = GetValue(DEBUG_VALUE_NAME)
     TextBoxGLECode.Font.size = GetValue(EDITOR_FONT_SIZE_VALUE_NAME)
     TextBoxGLECode.WordWrap = GetValue(EDITOR_WORD_WRAP_VALUE_NAME)
@@ -130,7 +106,7 @@ End Sub
 
 Private Sub AddTagsToShape(vSh As Shape)
     ' takes gui elements and stores them in the shape
-    Dim index As Integer
+    Dim Index As Integer
     With vSh.Tags
         .Add GetShapeTagName(TAG_FIGURE), POWER_GLE_UUID
         .Add GetShapeTagName(TAG_VERSION), POWER_GLE_VERSION_NUMBER
@@ -143,13 +119,13 @@ Private Sub AddTagsToShape(vSh As Shape)
         .Add GetShapeTagName(GLE_FORM_WIDTH_VALUE_NAME), GLEForm.Width
         .Add GetShapeTagName(EDITOR_WORD_WRAP_VALUE_NAME), TextBoxGLECode.WordWrap
         .Add GetShapeTagName(USE_CAIRO_VALUE_NAME), CheckBoxUseCairo.value
-        .Add GetShapeTagName(PNG_TRANSPARENT_VALUE_NAME), CheckBoxPNGTransparent.value
+        .Add GetShapeTagName(PNG_TRANSPARENT_VALUE_NAME), checkboxPNGTransparent.value
     End With
-    index = 1
+    Index = 1
     For Each i In GlobalDataFiles.Keys
-        vSh.Tags.Add GetShapeTagName(TAG_DATA_FILENAME) + "_" + CStr(index), CStr(i)
-        vSh.Tags.Add GetShapeTagName(TAG_DATA_FILE_CONTENT) + "_" + CStr(index), GlobalDataFiles(i)
-        index = index + 1
+        vSh.Tags.Add GetShapeTagName(TAG_DATA_FILENAME) + "_" + CStr(Index), CStr(i)
+        vSh.Tags.Add GetShapeTagName(TAG_DATA_FILE_CONTENT) + "_" + CStr(Index), GlobalDataFiles(i)
+        Index = Index + 1
     Next i
 End Sub
 
@@ -180,7 +156,7 @@ Sub RetrieveOldShapeInfo(oldshape As Shape)
             TextBoxTempFolder.Text = .Item(GetShapeTagName(TAG_TEMP_FOLDER))
         End If
         If .Item(GetShapeTagName(PNGTRANSPARENT_VALUE_NAME)) <> "" Then
-            CheckBoxPNGTransparent.value = SanitizeBoolean(.Item(GetShapeTagName(PNGTRANSPARENT_VALUE_NAME)), True)
+            checkboxPNGTransparent.value = SanitizeBoolean(.Item(GetShapeTagName(PNGTRANSPARENT_VALUE_NAME)), True)
         End If
         If .Item(GetShapeTagName(SOURCECODE_CURSOR_POSITION_VALUE_NAME)) <> "" Then
             CursorPosition = CInt(.Item(GetShapeTagName(SOURCECODE_CURSOR_POSITION_VALUE_NAME)))
@@ -322,9 +298,7 @@ Sub RunGLE()
         
     Dim debugMode As Boolean
     debugMode = checkboxDebug.value
-    
-    
-    
+        
     Dim OutputFormat, OutputFileExt, OutputFilename As String
     Dim OutputFormatIndex As Integer
     OutputFormatIndex = ComboBoxOutputFormat.ListIndex
@@ -361,7 +335,7 @@ Sub RunGLE()
     End If
     Dim Transparent As String
     Transparent = ""
-    If (CheckBoxPNGTransparent And OutputFormat = "PNG") Then
+    If (checkboxPNGTransparent And OutputFormat = "PNG") Then
         Transparent = " /transparent "
     End If
     ' FrameProcess.Visible = True
@@ -464,7 +438,7 @@ Sub RunGLE()
         .Tags.Add GetShapeTagName(TAG_FIGURE_UUID), FigureUUID
         .Tags.Add GetShapeTagName(TAG_FIGURE_NAME), FigureName
         .Tags.Add GetShapeTagName(TAG_OUTPUT_FORMAT), OutputFormat
-        .Tags.Add GetShapeTagName(TAG_SLIDE_INDEX), ActiveWindow.View.Slide.SlideIndex
+        .Tags.Add GetShapeTagName(TAG_SLIDE_INDEX), ActiveWindow.View.slide.SlideIndex
         ' Apply scaling factors
         .ScaleHeight tScaleHeight, msoFalse
         .ScaleWidth tScaleWidth, msoFalse
@@ -505,10 +479,10 @@ Sub RunGLE()
             
             Dim newGroup As Shape
             ' Get current slide, it will be used to group ranges
-            Dim sld As Slide
+            Dim Sld As slide
             Dim SlideIndex As Long
-            SlideIndex = ActiveWindow.View.Slide.SlideIndex
-            Set sld = ActivePresentation.Slides(SlideIndex)
+            SlideIndex = ActiveWindow.View.slide.SlideIndex
+            Set Sld = ActivePresentation.Slides(SlideIndex)
 
             ' Group all non-modified elements from old group, plus modified element
             j = j + 1
@@ -577,7 +551,7 @@ Sub RunGLE()
                 Next
                 
                 If j_current > 1 Then
-                    Set newGroup = sld.Shapes.Range(CurrentLevelArr).Group
+                    Set newGroup = Sld.Shapes.Range(CurrentLevelArr).Group
                     j = j + 1
                     ReDim Preserve arr(1 To j)
                     arr(j) = newGroup.name
@@ -613,8 +587,7 @@ Sub RunGLE()
     End If
     
     ' Add Alternative Text
-    newShape.AlternativeText = "PowerGLE Figure: " + FigureName + "." + GLE_EXT + " format: " + OutputFormat + " dpi: " + OutputDpiString
-    newShape.Title = "PowerGLE Figure: " + FigureName + "." + GLE_EXT
+    FormAltTextandTitle newShape
     
     ' Select the new shape
     newShape.Select
@@ -632,31 +605,7 @@ Sub RunGLE()
     End If
 End Sub
 
-Private Sub FullyUngroupShape(newShape As Shape)
-    Dim Shr As ShapeRange
-    Dim s As Shape
-    If newShape.Type = msoGroup Then
-        Set Shr = newShape.Ungroup
-        For i = 1 To Shr.count
-            Set s = Shr.Item(i)
-            If s.Type = msoGroup Then
-                Call FullyUngroupShape(s)
-            End If
-        Next
-    End If
-End Sub
 
-Private Function GetAllShapesInGroup(newShape As Shape) As Variant
-    Dim arr() As Variant
-    Dim j As Long
-    Dim s As Shape
-    For Each s In newShape.GroupItems
-            j = j + 1
-            ReDim Preserve arr(1 To j)
-            arr(j) = s.name
-    Next
-    GetAllShapesInGroup = arr
-End Function
 
 Private Function LineToFreeform(s As Shape) As Shape
     t = s.Line.Weight
@@ -818,7 +767,7 @@ Private Function AddDisplayShape(path As String, PosX As Single, PosY As Single)
 ' from http://www.vbaexpress.com/forum/showthread.php?47687-Addpicture-adds-the-picture-to-a-placeholder-rather-as-a-new-shape
 ' modified based on http://www.vbaexpress.com/forum/showthread.php?37561-Delete-empty-placeholders
     Dim oshp As Shape
-    Dim osld As Slide
+    Dim osld As slide
     On Error Resume Next
     Set osld = ActiveWindow.Selection.SlideRange(1)
     If Err <> 0 Then Exit Function
@@ -980,7 +929,7 @@ Private Sub ButtonDataRemove_Click()
     sel_index = ListBoxDataFiles.ListIndex
     If sel_index <> -1 Then
         GlobalDataFiles.Remove ListBoxDataFiles.Text
-        ListBoxDataFiles.RemoveItem index
+        ListBoxDataFiles.RemoveItem Index
     End If
 End Sub
 

@@ -17,7 +17,7 @@ Public Function GetTempPath(Optional PrependPresentation As Boolean = True) As S
     If UseAbsolute = False Then
         res = CStr(GetValue(RELATIVE_TEMP_DIR_VALUE_NAME))
         If PrependPresentation Then
-            ' relative prepend the current presenation path to it
+            ' relative prepend the current presentation path to it
             Dim sPath As String
             sPath = ActivePresentation.path
             If Len(sPath) > 0 Then
@@ -34,23 +34,37 @@ Public Function GetTempPath(Optional PrependPresentation As Boolean = True) As S
     GetTempPath = AddSlash(res)
 End Function
 
-Public Function GetFigureFolder(strPath As String) As String
-    ' gets the next available figure folder in the path provided
-    ' FIGURE_NAME_XXX  where XXX is a number eg. figure_1 figure_2
+Public Function GetFigureName(Optional Index As Long = 0) As String
+    ' returns the default figure name from the index provided
+    If Index = 0 Then
+        GetFigureName = TEMP_FILENAME + "_"
+    Else
+        GetFigureName = TEMP_FILENAME + "_" + CStr(Index)
+    End If
+End Function
+
+Public Function GetNextFigureName(strPath As String) As String
+    ' gets the next available figure name from the path provided
+    ' each figure name is the folder name as well'
+    ' FIGURE_NAME_XXX  where XXX is a number e.g. figure_1 figure_2
+    GetNextFigureName = GetFigureName(GetNextFigureIndexInFolder(strPath))
+End Function
+
+Public Function GetNextFigureIndexInFolder(strPath As String) As Long
+    ' gets the next available figure index in folder
+    ' FIGURE_NAME_XXX  where XXX is a number e.g. figure_1 figure_2
     Dim max_index As Integer
     Dim new_index As Integer
-    Dim fbase As String
     Dim RegEx As Object
     Dim allMatches As Object
     max_index = 1
-    fbase = TEMP_FILENAME + "_"
     Set xFSO = CreateObject("Scripting.FileSystemObject")
     Set xFolder = xFSO.GetFolder(strPath)
     Set RegEx = CreateObject("VBScript.RegExp")
     RegEx.Global = True
     RegEx.IgnoreCase = True
     With RegEx
-        .Pattern = "(^" + fbase + "([0-9]+)$)"
+        .Pattern = "(^" + GetFigureName() + "([0-9]+)$)"
     End With
     For Each fold In xFolder.SubFolders
         ' get number part of folder if it matches
@@ -62,8 +76,36 @@ Public Function GetFigureFolder(strPath As String) As String
             End If
         End If
     Next fold
-    GetFigureFolder = fbase + CStr(max_index)
+    GetNextFigureIndexInFolder = max_index
 End Function
+
+Public Function GetNextFigureIndexInShapes(Shapes() As Variant) As Long
+    ' gets the next available figure index in folder
+    ' FIGURE_NAME_XXX  where XXX is a number e.g. figure_1 figure_2
+    Dim max_index As Integer
+    Dim new_index As Integer
+    Dim RegEx As Object
+    Dim allMatches As Object
+    max_index = 1
+    Set RegEx = CreateObject("VBScript.RegExp")
+    RegEx.Global = True
+    RegEx.IgnoreCase = True
+    With RegEx
+        .Pattern = "(^" + GetFigureName() + "([0-9]+)$)"
+    End With
+    For Each s In Shapes
+        ' get number part of figure name if it matches
+        Set allMatches = RegEx.Execute(s.Tags(GetShapeTagName(TAG_FIGURE_NAME)))
+        If allMatches.count <> 0 Then
+            new_index = CInt(allMatches.Item(0).submatches.Item(1))
+            If max_index <= new_index Then
+                max_index = new_index + 1
+            End If
+        End If
+    Next
+    GetNextFigureIndexInShapes = max_index
+End Function
+
 
 Public Sub CreateFolder(strPath As String)
     ' recursively creates folders even if parents do not exist
@@ -134,19 +176,17 @@ Public Function GetArrayIndex(a As String, value As String) As Integer
     Next
 End Function
 
-Public Function GetArrayValue(a As String, index As Integer) As String
+Public Function GetArrayValue(a As String, Index As Integer) As String
     GetArrayValue = ""
     Dim la() As String
     la = ArrayFromCSVList(a)
-    If index >= LBound(la) And index <= UBound(la) Then
-        GetArrayValue = la(index)
+    If Index >= LBound(la) And Index <= UBound(la) Then
+        GetArrayValue = la(Index)
     End If
 End Function
 
-
-
 ' Public Function GetUUID(Optional lowercase As Boolean, Optional parens As Boolean) As String
-' ' not good may produce non uniqeu ids
+' ' not good may produce non unique ids
 '     Dim k As Integer
 '     Dim h As String
 '     GetUUID = Space(36)
@@ -192,6 +232,14 @@ Public Function IsInArray(arr As Variant, valueToCheck As String) As Boolean
     Next
 End Function
 
+Public Function max(X, Y As Variant) As Variant
+  max = IIf(X > Y, X, Y)
+End Function
+
+Public Function min(X, Y As Variant) As Variant
+   min = IIf(X < Y, X, Y)
+End Function
+
 Public Function Quote(val As String) As String
     ' returns quoted string
     Quote = """" + val + """"
@@ -212,9 +260,6 @@ Public Function AddSlash(val As String) As String
     End If
 End Function
 
-
-
-
 Public Function PackArrayToString(vArray As Variant) As String
     Dim strDelimiter As String
     strDelimiter = "|"
@@ -225,6 +270,117 @@ Public Function UnpackStringToArray(Str As String) As Variant
     Dim strDelimiter As String
     strDelimiter = "|"
     UnpackStringToArray = Split(Str, strDelimiter, , vbTextCompare)
+End Function
+
+Function mergeArrays(arr1() As Variant, arr2() As Variant) As Variant
+    ' merge two arrays into one see https://stackoverflow.com/questions/1588913/how-do-i-merge-two-arrays-in-vba?answertab=active#tab-top
+    ' with some modifications if arrays nore not itialized (ie. empty)
+    Dim returnThis() As Variant
+    Dim len1 As Long, len2 As Long, lenRe As Long, counter As Long
+    If Not IsArray(arr1) And Not IsArray(arr2) Then Exit Function
+    len1 = 0
+    len2 = 0
+    'In VB, for whatever reason, Not myArray returns the SafeArray pointer. For uninitialized arrays, this returns -1.
+    If (Not arr1) <> -1 Then
+        ' array initialzed
+        len1 = UBound(arr1)
+    End If
+    If (Not arr2) <> -1 Then
+        ' array initialzed
+        len2 = UBound(arr2)
+    End If
+    lenRe = len1 + len2
+    If lenRe > 0 Then
+        ReDim returnThis(1 To lenRe)
+        counter = 1
+        Do While counter <= len1 'copy first array into returnThis
+            Set returnThis(counter) = arr1(counter)
+            counter = counter + 1
+        Loop
+        If len2 > 0 Then
+            Do While counter <= lenRe 'copy the second array in returnThis
+                Set returnThis(counter) = arr2(counter - len1)
+                counter = counter + 1
+            Loop
+        End If
+    End If
+    mergeArrays = returnThis
+End Function
+
+Public Sub FormAltTextandTitle(ByRef lshape As Variant)
+    ' forms based on what is in tags
+    lshape.AlternativeText = "PowerGLE Figure: " + lshape.Tags(GetShapeTagName(TAG_FIGURE_NAME)) + "." + GLE_EXT + " format: " + lshape.Tags(GetShapeTagName(TAG_OUTPUT_FORMAT)) + " dpi: " + lshape.Tags(GetShapeTagName(TAG_OUTPUT_DPI))
+    lshape.Title = "PowerGLE Figure: " + lshape.Tags(GetShapeTagName(TAG_FIGURE_NAME)) + "." + GLE_EXT
+End Sub
+
+Public Sub FullyUngroupShape(newShape As Shape)
+    Dim Shr As ShapeRange
+    Dim s As Shape
+    If newShape.Type = msoGroup Then
+        Set Shr = newShape.Ungroup
+        For i = 1 To Shr.count
+            Set s = Shr.Item(i)
+            If s.Type = msoGroup Then
+                Call FullyUngroupShape(s)
+            End If
+        Next
+    End If
+End Sub
+
+Public Function GetAllShapesInGroup(newShape As Shape, Optional PowerGLEShapesOnly As Boolean = True) As Variant
+    ' returns array of shapes if single shape it will be a one element array
+    Dim arr() As Variant
+    Dim s As Shape
+    If newShape.Type = msoGroup Then
+        For Each s In newShape.GroupItems
+            Dim b() As Variant
+            b = GetAllShapesInGroup(s, PowerGLEShapesOnly)
+            arr = mergeArrays(arr, b)
+        Next
+    Else
+        If (PowerGLEShapesOnly = True And IsPowerGLEShape(newShape) = True) Or PowerGLEShapesOnly = False Then
+            ReDim arr(1 To 1)
+            Set arr(1) = newShape
+        End If
+    End If
+    GetAllShapesInGroup = arr
+End Function
+
+Public Function GetAllShapesInShapeRange(newShapeRange As ShapeRange, Optional PowerGLEShapesOnly As Boolean = True) As Variant
+    ' returns array of shapes if single shape it will be a one element array
+    Dim arr() As Variant
+    Dim j As Long
+    Dim s As Shape
+    For Each s In newShapeRange
+        Dim b() As Variant
+        b = GetAllShapesInGroup(s, PowerGLEShapesOnly)
+        arr = mergeArrays(arr, b)
+    Next
+    GetAllShapesInShapeRange = arr
+End Function
+
+
+Public Function GetAllShapesOnSlide(newSlide As slide, Optional PowerGLEShapesOnly As Boolean = True) As Variant
+    ' returns all shapes on slide in an array
+    Dim arr() As Variant
+    Dim s As Shape
+    For Each s In newSlide.Shapes
+        Dim b() As Variant
+        b = GetAllShapesInGroup(s, PowerGLEShapesOnly)
+        arr = mergeArrays(arr, b)
+    Next
+    GetAllShapesOnSlide = arr
+End Function
+
+Public Function GetAllShapesInPresentation(Pres As Presentation, Optional PowerGLEShapesOnly As Boolean = True) As Variant
+    Dim arr() As Variant
+    Dim s As slide
+    For Each s In Pres.Slides
+        Dim b() As Variant
+        b = GetAllShapesOnSlide(s, PowerGLEShapesOnly)
+        arr = mergeArrays(arr, b)
+    Next
+    GetAllShapesInPresentation = arr
 End Function
 
 

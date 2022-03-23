@@ -43,6 +43,10 @@ Attribute VB_Exposed = False
 
 
 
+
+
+
+
 Private Sub ButtonAbsTempPath_Click()
     Dim fd As FileDialog
     Set fd = Application.FileDialog(msoFileDialogFolderPicker) 'msoFileDialogFilePicker
@@ -107,7 +111,7 @@ Private Sub ButtonReset_Click()
     CheckBoxExternalEditor.value = GetDefaultValue(USE_EXTERNAL_EDITOR_VALUE_NAME)
     ComboBoxOutputFormat.ListIndex = GetArrayIndex(OUTPUT_FORMATS, GetDefaultValue(OUTPUT_FORMAT_VALUE_NAME))
     TextBoxGLE.Text = GetDefaultValue(GLE_EXECUTABLE_VALUE_NAME)
-    TextBoxDpi.Text = GetDefaultValue(BITMAP_DPI_VALUE_NAME)
+    TextBoxDPI.Text = GetDefaultValue(BITMAP_DPI_VALUE_NAME)
     CheckBoxUseCairo.value = GetDefaultValue(USE_CAIRO_VALUE_NAME)
     CheckBoxPreserveTempFiles.value = GetDefaultValue(PRESERVE_TEMP_FILES_VALUE_NAME)
     TextBoxScalingGain.Text = GetDefaultValue(SCALING_GAIN_VALUE_NAME)
@@ -129,7 +133,7 @@ Private Sub ButtonOk_Click()
     ' GLE command
     SetValue GLE_EXECUTABLE_VALUE_NAME, UnQuote(CStr(TextBoxGLE.Text))
     ' Global dpi setting
-    SetValue BITMAP_DPI_VALUE_NAME, CInt(TextBoxDpi.Text)
+    SetValue BITMAP_DPI_VALUE_NAME, CInt(TextBoxDPI.Text)
     SetValue USE_CAIRO_VALUE_NAME, CheckBoxUseCairo.value
     SetValue PRESERVE_TEMP_FILES_VALUE_NAME, CheckBoxPreserveTempFiles.value
     ' Path to External Editor
@@ -180,7 +184,7 @@ Private Sub UserForm_Initialize()
     RelPathTextBox.Text = GetValue(RELATIVE_TEMP_DIR_VALUE_NAME)
     AbsPathButton.value = GetValue(USE_ABSOLUTE_TEMP_DIR_VALUE_NAME)
     TextBoxGLE.Text = GetValue(GLE_EXECUTABLE_VALUE_NAME)
-    TextBoxDpi.Text = GetValue(BITMAP_DPI_VALUE_NAME)
+    TextBoxDPI.Text = GetValue(BITMAP_DPI_VALUE_NAME)
     CheckBoxUseCairo.value = GetValue(USE_CAIRO_VALUE_NAME)
     CheckBoxPreserveTempFiles.value = GetValue(PRESERVE_TEMP_FILES_VALUE_NAME)
     CheckBoxUTF8.value = GetValue(USE_UTF8_VALUE_NAME)
