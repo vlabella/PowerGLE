@@ -9,7 +9,18 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Public WithEvents App As Application
 Attribute App.VB_VarHelpID = -1
-
+'
+' -- AppEventHandler.cls
+'
+' PowerGLE: PowerPoint Add-in for GLE
+'
+' Author:   Vincent LaBella
+' Email:    vlabella@sunypoly.edu
+' GLE:      glx.sourceforge.io github.com/vlabella/GLE
+' PowerGLE: github.com/vlabella/PowerGLE
+'
+' Inspired by and based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+'
 Private Sub App_WindowSelectionChange(ByVal Sel As Selection)
     ' happens when a selection is changed or copy and pasted
     ' Detect event where PowerGLE figure has been created using copy and paste

@@ -2,9 +2,9 @@ Attribute VB_Name = "Config"
 '
 ' -- Config.bas
 '
-' Global Config file. Public constants and defaults
+' Global Config file. Public constants and default settings
 '
-' PowerPoint Add-in for GLE
+' PowerGLE: PowerPoint Add-in for GLE
 '
 ' Author:   Vincent LaBella
 ' Email:    vlabella@sunypoly.edu

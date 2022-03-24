@@ -13,41 +13,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+'
+' -- RegenerateForm.frm
+'
+' Form that displays status of batch regeneration
+'
+' PowerGLE: PowerPoint Add-in for GLE
+'
+' Author:   Vincent LaBella
+' Email:    vlabella@sunypoly.edu
+' GLE:      glx.sourceforge.io github.com/vlabella/GLE
+' PowerGLE: github.com/vlabella/PowerGLE
+'
+' Inspired by and based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+'
 Private Sub UserForm_Initialize()
     Me.Top = Application.Top + 110
     Me.Left = Application.Left + 25

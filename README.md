@@ -42,9 +42,9 @@ The options that control the creation of the GLE figure are:
 * Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint image is calculated as \(screen_dpi/output_dpi x scaling_gain\).  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
 
 
-### Temporary files
+### Temporary files & Figure Name
 
-PowerGLE writes all the GLE code to a temporary sub-folder within the folder that contains the current presentation.  The code for each GLE figure is contained within its own sub-folder named "figure_#" along with any secondary and output files.  By default these folder are
+PowerGLE writes all the GLE code to a temporary sub-folder within the folder that contains the current presentation.  The default name for this sub-folder is `PowerGLE`. The code for each GLE figure is contained within its own sub-folder named the name of the figure along with any secondary and output files.  The default name for each figure is `figure_#`, where `#` is a number  By default these folder are
 
     .\PowerGLE\<presentation file name>\figure_1
     .\PowerGLE\<presentation file name>\figure_2

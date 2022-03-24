@@ -1,9 +1,11 @@
 Attribute VB_Name = "CommonRoutines"
 '
-' -- CommonRoutines.bas  collection of handy VBA routines
+' -- CommonRoutines.bas  -  collection of handy VBA routines
 '
 ' Author: Vincent LaBella
 ' vlabella@sunypoly.edu
+'
+' Some routines based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
 '
 Public Function GetTempPath(Optional PrependPresentation As Boolean = True) As String
     ' Return an absolute path to temp location

@@ -1,8 +1,11 @@
 Attribute VB_Name = "WinLibRoutines"
 '
-' WinLibRoutines.bas - collection of windows library calls
-'  taken from various locations on the internet as indicated
+' -- WinLibRoutines.bas 
 '
+' collection of windows library calls taken from various locations on the internet as indicated
+'
+' based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+''
 ' Portions of code below taken from:
 ' http://www.mvps.org/access/api/api0004.htm
 ' Courtesy of Terry Kreft

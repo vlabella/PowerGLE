@@ -13,41 +13,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+'
+' -- AboutForm.frm
+'
+' Form that handles viewing of About Box
+'
+' PowerGLE: PowerPoint Add-in for GLE
+'
+' Author:   Vincent LaBella
+' Email:    vlabella@sunypoly.edu
+' GLE:      glx.sourceforge.io github.com/vlabella/GLE
+' PowerGLE: github.com/vlabella/PowerGLE
+'
+' Inspired by and based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+'
 Private Sub CloseAboutButton_Click()
     Unload AboutBox
 End Sub

@@ -2,7 +2,9 @@ Attribute VB_Name = "PowerGLE"
 '
 ' -- PowerGLE.bas
 '
-' PowerPoint Add-in for GLE
+' Main functions calls and app initialization
+'
+' PowerGLE: PowerPoint Add-in for GLE
 '
 ' Author:   Vincent LaBella
 ' Email:    vlabella@sunypoly.edu

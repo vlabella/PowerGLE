@@ -13,7 +13,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+'
+' -- GLEForm.frm
+'
+' Form that handles creation and editing of GLE code
+'
+' PowerGLE: PowerPoint Add-in for GLE
+'
+' Author:   Vincent LaBella
+' Email:    vlabella@sunypoly.edu
+' GLE:      glx.sourceforge.io github.com/vlabella/GLE
+' PowerGLE: github.com/vlabella/PowerGLE
+'
+' Inspired by and based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+'
 Dim TemplateSortedListString As String
 Dim TemplateSortedList() As String
 Dim TemplateNameSortedListString As String

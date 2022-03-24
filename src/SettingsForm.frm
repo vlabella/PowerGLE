@@ -13,40 +13,20 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+'
+' -- SettingsForm.frm
+'
+' Form that handles changing and viewing of global settings
+'
+' PowerGLE: PowerPoint Add-in for GLE
+'
+' Author:   Vincent LaBella
+' Email:    vlabella@sunypoly.edu
+' GLE:      glx.sourceforge.io github.com/vlabella/GLE
+' PowerGLE: github.com/vlabella/PowerGLE
+'
+' Inspired by and based on code from IguanaTeX  www.jonathanleroux.org/software/iguanatex/
+'
 Private Sub ButtonAbsTempPath_Click()
     Dim fd As FileDialog
     Set fd = Application.FileDialog(msoFileDialogFolderPicker) 'msoFileDialogFilePicker
