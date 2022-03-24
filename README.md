@@ -42,18 +42,22 @@ The options that control the creation of the GLE figure are:
 * Scaling gain: controls the initial size of the figure on the slide.  The scale of a newly created PowerPoint image is calculated as \(screen_dpi/output_dpi x scaling_gain\).  Increasing or decreasing the gain will make the initial size large or smaller, respectively.
 
 
-### Temporary files & Figure Name
+### Temporary Files & Figure Name
 
-PowerGLE writes all the GLE code to a temporary sub-folder within the folder that contains the current presentation.  The default name for this sub-folder is `PowerGLE`. The code for each GLE figure is contained within its own sub-folder named the name of the figure along with any secondary and output files.  The default name for each figure is `figure_#`, where `#` is a number  By default these folder are
+PowerGLE creates many temporary files while creating each figure that are left on the computer after the application closes.  **These temporary files are not needed by PowerGLE since all the GLE code is stored within the PowerPoint presentation.** This allows for quick retrieval of the GLE code outside of the PowerPoint application.  
 
-    .\PowerGLE\<presentation file name>\figure_1
-    .\PowerGLE\<presentation file name>\figure_2
-    .\PowerGLE\<presentation file name>\figure_3 
+PowerGLE writes all the GLE code to a temporary sub-folder within the folder that contains the current presentation.  The default name for this sub-folder is `PowerGLE\<presentation_name>`, where `<presentation_name>` is the filename (with extension) of the active presentation, where the `.` is replaced by `_`.  Within this sub-folder, each GLE figure's code and output files are contained within its own sub-folder named the figure name.  The default name for each figure is `figure_#`, where `#` is a number.  For example, for a PowerPoint presentation named `My Presentation.pptm` these folders would look like
+
+    .\PowerGLE\My Presentation_pptm\figure_1
+    .\PowerGLE\My Presentation_pptm\figure_2
+    .\PowerGLE\My Presentation_pptm\figure_3 
     ...
 
-The GLE file is named `figure_#.gle` within the folder.  This name can be changed by entering a new name in "Figure Name" field.  In this way all the GLE code can be quickly retrieved outside of the PowerPoint application.  PowerGLE leaves these files on the computer after the application closes.  These files are not needed by PowerGLE and can be manually deleted if desired since all the GLE code is stored within the PowerPoint presentation.
+The GLE file is named `figure_#.gle` within the folder.  This name can be changed for any figure by entering a new name in "Figure Name" field, which will also change its folder name as well.   
 
-There is an option to use an absolute temporary root folder as well.
+There is an option to use an absolute temporary root folder as well, but use this with caution as two presentations with the same name from different folders will overwrite each others files.  For example if `c:\temp` is chosen the 
+
+When a GLE figure is copied within PowerPoint the new figure is given the next available default figure name `figure_#`, even if the source figure has been renamed.
 
 
 ## Building
