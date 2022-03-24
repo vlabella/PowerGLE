@@ -44,7 +44,7 @@ The options that control the creation of the GLE figure are:
 
 ### Temporary Files & Figure Name
 
-PowerGLE creates many temporary files while creating each figure that are left on the computer after the application closes.  **These temporary files are not needed by PowerGLE since all the GLE code is stored within the PowerPoint presentation.** This allows for quick retrieval of the GLE code outside of the PowerPoint application.  
+PowerGLE creates many temporary files while creating each figure that are left on the computer after the application closes.   This allows for quick retrieval of the GLE code outside of the PowerPoint application.  *These temporary files are not needed by PowerGLE since all the GLE code is stored within the PowerPoint presentation.*
 
 PowerGLE writes all the GLE code to a temporary sub-folder within the folder that contains the current presentation.  The default name for this sub-folder is `PowerGLE\<presentation_name>`, where `<presentation_name>` is the filename (with extension) of the active presentation, where the `.` is replaced by `_`.  Within this sub-folder, each GLE figure's code and output files are contained within its own sub-folder named the figure name.  The default name for each figure is `figure_#`, where `#` is a number.  For example, for a PowerPoint presentation named `My Presentation.pptm` these folders would look like
 
@@ -55,9 +55,14 @@ PowerGLE writes all the GLE code to a temporary sub-folder within the folder tha
 
 The GLE file is named `figure_#.gle` within the folder.  This name can be changed for any figure by entering a new name in "Figure Name" field, which will also change its folder name as well.   
 
-There is an option to use an absolute temporary root folder as well, but use this with caution as two presentations with the same name from different folders will overwrite each others files.  For example if `c:\temp` is chosen the 
+There is an option to use an absolute temporary root folder as well, but use this with caution as two presentations with the same name from different folders will overwrite each others files.  For example if `c:\temp` is chosen for a presentation named `My Presentation.pptm` these folders would look like
 
-When a GLE figure is copied within PowerPoint the new figure is given the next available default figure name `figure_#`, even if the source figure has been renamed.
+    c:\temp\PowerGLE\My Presentation_pptm\figure_1
+    c:\temp\PowerGLE\My Presentation_pptm\figure_2
+    c:\temp\PowerGLE\My Presentation_pptm\figure_3 
+    ...
+
+When a GLE figure is copied within PowerPoint the new figure is given the next available default figure name `figure_#`, even if the source figure has a non-default figure name.
 
 
 ## Building
